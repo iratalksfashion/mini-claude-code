@@ -1,0 +1,10 @@
+{
+  // Turn off AI ghost-text suggestions (Copilot etc.)
+  "editor.inlineSuggest.enabled": false,
+  "github.copilot.enable": { "*": false },
+  "chat.disableAIFeatures": true,
+
+  // Optional: also turn off the dropdown suggestions while typing
+  "editor.quickSuggestions": { "other": false, "comments": false, "strings": false },
+  "editor.suggestOnTriggerCharacters": false
+}
