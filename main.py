@@ -5,8 +5,7 @@ Main entry point for mini claude code.
 import anthropic
 from dotenv import load_dotenv
 from model import get_model, DEFAULT_MODEL
-from context import Context
-
+from context import Context 
 
 def main():
     load_dotenv()  # Load environment variables from .env file
@@ -42,7 +41,7 @@ def main():
         )
 
         # print the entire response with all different kinds of blocks.
-        # print(response)
+        print(response)
 
         model_context.add_assistant(response.content)
 

@@ -30,6 +30,11 @@ class Context:
         # Adds assistant's last message
         self.messages.append({"role": "assistant", "content": content})
 
+    def add_tool_results(self, content: str):
+        # Adds tool's result. The API only has 2 roles: user and assistant. It doesn't differentiate whether something is 
+        # coming from actual user (user input etc) or some tool call. 
+        self.messages.append({"role": "user", "content": content})
+
     def clear(self) -> None:
         # Clears all past conversation history (the system prompt remains)
         self.messages.clear()
