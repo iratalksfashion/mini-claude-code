@@ -1,5 +1,9 @@
 """
 The Tools: Every tool that mini-claude possesses. 
+
+Each tool has 2 parts:
+1. An actual python function that runs underneath and actually does the job.
+2. The schema - This contains everything Claude sees. Claude returns just texts. With the help of this schema, it converts text to actual method name and parameters. 
 """
 from pathlib import Path
 

@@ -6,6 +6,7 @@ import anthropic
 from dotenv import load_dotenv
 from model import get_model, DEFAULT_MODEL
 from context import Context 
+from agent import Agent
 
 def main():
     load_dotenv()  # Load environment variables from .env file
@@ -15,7 +16,7 @@ def main():
 
     model_id = get_model(DEFAULT_MODEL)
     model_context = Context()  # Holds system prompt + Conversation History
-
+    agent = Agent(client, model_id, model_context)
     print("Welcome to Mini Claude Code. Type /clear to erase, exit to quit")
     while True:
         question = input("Enter your question: ").strip()
@@ -30,26 +31,16 @@ def main():
             print("Conversation Cleared")
             continue
 
-        model_context.add_user(question)
+        try:
+            answer = agent.run(question)
+        except anthropic.AuthenticationError:
+            print("Error: your API key is rejected. Check .env")
+        except anthropic.APIConnectionError:
+            print("Error: can't reach the API. Check your internet connection.")
+        except anthropic.APIStatusError as e:
+            print(f"API Error: {e.status_code}: {e.message}")
 
-        # Send the question to the Claude model via messages API call and wait for a reply
-        response = client.messages.create(
-            model=model_id,
-            max_tokens=16000,
-            system=model_context.system_prompt,
-            messages=model_context.messages,
-        )
-
-        # print the entire response with all different kinds of blocks.
-        print(response)
-
-        model_context.add_assistant(response.content)
-
-        # The reply is a list of blocks, we'll print only the text ones.
-        for block in response.content:
-            if block.type == "text":
-                print(f"Claude: {block.text}")
-
+        print(f"Claude: {answer}")
 
 if __name__ == "__main__":
     main()
