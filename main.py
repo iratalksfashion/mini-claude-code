@@ -25,7 +25,7 @@ def main():
         if (
             not question
         ):  # covers empty question scenario. Reads as "if question is empty"
-            break
+            continue
         if question == "/clear":
             model_context.clear()
             print("Conversation Cleared")
@@ -39,8 +39,8 @@ def main():
             print("Error: can't reach the API. Check your internet connection.")
         except anthropic.APIStatusError as e:
             print(f"API Error: {e.status_code}: {e.message}")
-
-        print(f"Claude: {answer}")
+        else:
+            print(f"Claude: {answer}")
 
 if __name__ == "__main__":
     main()

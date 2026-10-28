@@ -26,11 +26,11 @@ class Context:
         # Adds user's last message
         self.messages.append({"role": "user", "content": content})
 
-    def add_assistant(self, content: str):
+    def add_assistant(self, content: list):
         # Adds assistant's last message
         self.messages.append({"role": "assistant", "content": content})
 
-    def add_tool_results(self, content: str):
+    def add_tool_results(self, content: list):
         # Adds tool's result. The API only has 2 roles: user and assistant. It doesn't differentiate whether something is 
         # coming from actual user (user input etc) or some tool call. 
         self.messages.append({"role": "user", "content": content})

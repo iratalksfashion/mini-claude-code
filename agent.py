@@ -33,9 +33,11 @@ class Agent:
             self.context.add_assistant(response.content)
 
             if response.stop_reason == "end_turn":
-                return self.__text(response)
+                return self._text(response)
             elif response.stop_reason == "max_tokens":
-                return self.__text(response) + "\n[Reply was cut off due to max tokens limit reached]"
+                return self._text(response) + "\n[Reply was cut off due to max tokens limit reached]"
+            elif response.stop_reason == "refusal":
+                return "Claude declined this request."
             else:
                 # Run every tool Claude asked for, collecting the results
                 results = []
@@ -54,7 +56,7 @@ class Agent:
         return "Stopped: too many steps."
 
 
-    def __text(self, response) -> str:
+    def _text(self, response) -> str:
         """Join all the text blocks in a response into one string. """
         return "\n".join(b.text for b in response.content if b.type == "text") 
         # The reply is a list of blocks, we'll print only the text ones.
