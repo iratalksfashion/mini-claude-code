@@ -31,8 +31,8 @@ class Context:
         self.messages.append({"role": "assistant", "content": content})
 
     def add_tool_results(self, content: list):
-        # Adds tool's result. The API only has 2 roles: user and assistant. It doesn't differentiate whether something is 
-        # coming from actual user (user input etc) or some tool call. 
+        # Adds tool's result. The API only has 2 roles: user and assistant. It doesn't differentiate whether something is
+        # coming from actual user (user input etc) or some tool call.
         self.messages.append({"role": "user", "content": content})
 
     def clear(self) -> None:
@@ -43,4 +43,4 @@ class Context:
         return len(self.messages)
 
     def __repr__(self):
-        print ("Context" + len(self) + "messages")
+        print("Context" + len(self) + "messages")

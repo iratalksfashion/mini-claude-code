@@ -1,0 +1,6 @@
+chai,
+eggs,
+aloo parantha,
+banana,
+kadhai chicken,
+diet coke,

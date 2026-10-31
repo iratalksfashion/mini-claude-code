@@ -1,4 +1,0 @@
-chai,
-eggs,
-banana,
-aloo parantha,

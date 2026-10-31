@@ -5,8 +5,9 @@ Main entry point for mini claude code.
 import anthropic
 from dotenv import load_dotenv
 from model import get_model, DEFAULT_MODEL
-from context import Context 
+from context import Context
 from agent import Agent
+
 
 def main():
     load_dotenv()  # Load environment variables from .env file
@@ -41,6 +42,7 @@ def main():
             print(f"API Error: {e.status_code}: {e.message}")
         else:
             print(f"Claude: {answer}")
+
 
 if __name__ == "__main__":
     main()
