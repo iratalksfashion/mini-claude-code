@@ -6,6 +6,7 @@ user message -> Claude asks for a tool -> Agent calls the tool, returns the resp
 """
 from context import Context
 from tools import run_tool, TOOLS #the schema which talks to claude
+from guardrails import tool_check #checks whether a tool is safe to use
 
 MAX_STEPS = 20 #Safety limit, so that a confused agent doesn't loop forever
 
@@ -44,6 +45,21 @@ class Agent:
                 for block in response.content:
                     if block.type == "tool_use":
                         print(f"  🔧 {block.name}({block.input})")
+
+                        #Handles Error in Tool Usage (if any)
+                        error = tool_check(block.name, block.input) #if tool suggested by Claude is unsafe to use, an error is thrown.
+                        if error:
+                            print(f"  ⛔ {error}")
+                            results.append(
+                                {
+                                    "type": "tool_result",
+                                    "tool_use_id": block.id,
+                                    "content": error,
+                                    "is_error": True #This tells claude that there's an error
+                                }
+                            )
+
+                        #Handles Tool output
                         output = run_tool(block.name, block.input)
                         results.append(
                             {
